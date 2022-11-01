@@ -23,6 +23,10 @@ def inputScoreView(request):
 		cursor.execute(sqlstatement)
 		#cursor.execute("INSERT INTO insecure_web_scores (student_id_id, subject, scores) VALUES (%d,%d,%d)", [studentid, subjectname, score])
 	
+	# there should be logs here of what request was executed and who sent the request to track malicious requests
+	# below is example of fix, should be replaced with a function that outputs a log to an external file
+	# print("SCORE WITH VALUES STUDENTID = " + studentid + ", SUBJECTNAME = "+ subjectname + ", SCORE = " + score + ", executed by teacher = " + request.user.username + " on " + datetime.now().strftime("%d/%m/%Y %H:%M:%S")  )  
+	
 	return redirect('/')
 
 
