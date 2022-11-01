@@ -1,0 +1,18 @@
+[
+	{
+		"model": "insecure_web.account",
+		"pk": 1,
+		"fields": {
+			"owner": "sokratis",
+			"accounttype": "teacher"
+		}
+	},
+	{
+		"model": "insecure_web.account",
+		"pk": 2,
+		"fields": {
+			"owner": "joe",
+			"accounttype": "student" 
+		}
+	}
+]

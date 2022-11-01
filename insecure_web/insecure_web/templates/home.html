@@ -1,0 +1,62 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <p> Hi {{ user.username }}! </p>
+
+  {% if type == "teacher" %}
+    <form id='scoreList' action='search/' method="GET">             <span>Search for your students score:</span><br/>
+      {% csrf_token %}
+              <select name="studentid">
+                {% for account in students %}
+                          <option value="{{account.id}}">{{account.owner.username}}</option>
+                {% endfor %}
+              </select><br/>
+              <span> Subject name = (empty means all) <input type="text" name="subjectname"/> </span><br/>
+              <input type="submit" value="search"/>
+      </form>
+
+      <br>
+
+      <form id='inputScore' action='input/' method="POST">             <span>Input your students score:</span><br/>
+        {% csrf_token %}
+                <select name="studentid">
+                  {% for account in students %}
+                            <option value="{{account.id}}">{{account.owner.username}}</option>
+                  {% endfor %}
+                  
+                </select><br/>
+                <span> Subject name = <input type="text" name="subjectname"/> </span><br/>
+                <span> Score = <input type="number" name="score"/> </span>
+                <input type="submit" value="input score"/>
+        </form>
+  {%endif %}
+
+  {% if type == "student" %}
+    <form id='scoreList' action='search/' method="GET">             <span>Search for your score:</span><br/>
+		{% csrf_token %}
+            <input type="text" name="subjectname"/><br/>
+            <input type="hidden" name="studentid" value= {{user.id}} />
+            <input type="submit" value="search"/>
+    </form>
+
+    <p>Your scores:</p>
+    <ul>
+    {% for score in score_data %} 
+        {% for key, value in score.items %} 
+        <li>{{key}} - {{value}}</li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+
+    
+  {%endif%}
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}

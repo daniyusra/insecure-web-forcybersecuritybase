@@ -1,0 +1,35 @@
+What is the project? 
+- School Report Card Viewer
+-> Two types of users: Teacher/Admin and Student
+
+- Teacher can input/edit scores and add/delete students
+- Students can browse lesson scores
+
+
+Vulnerability:
+1. SQL injection: (A03 2021) Students or even teachers can use SQL injection
+- Solution: SQL sanitization  
+2. Broken Access Control: (A01 2021) Students can access endpoint for inputting/editing scores
+- Solution: Add authorization check before processing score input requests
+3. Insecure Design: (A04 2021) A credential recovery workflow including  "questions and answers"
+- Solution: Suggest other methods for credential recovery such as email or directly contact teachers
+4. Identification and Authentication Failure: (A07 2021) Allows weak password on change password screen
+- Solution: Verify password before password change
+5. Security Logging and Monitoring Failures:(A09 2021) There is no logger for input/editing or even browsing of scores
+- Solution: Add logger, especially in input/editing
+
+
+superuser: admin
+password: iamadmin
+
+sample student:
+user: joe
+password: joemama123
+
+sample teacher:
+user: sokratis
+password: iamphilosopher
+
+Implementation To-Do:
+1. Add field to query about scores
+2. Add field to insert score
