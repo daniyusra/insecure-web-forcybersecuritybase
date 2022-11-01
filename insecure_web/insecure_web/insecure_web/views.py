@@ -4,12 +4,16 @@ from django.db import connection
 from .models import Account, Scores
 
 @login_required
-@csrf_exempt #fix: just remove this
+@csrf_exempt #fix: just remove this 
 def inputScoreView(request):
 	studentid = request.POST.get("studentid")
 	subjectname = request.POST.get("subjectname")
 	score = str(request.POST.get("score"))
 
+	# there is no validation here if the inputter is teacher or not, the only validation if the inputter is logged in
+	# as such, we can do validation to fix it
+	# if (Account.objects.get(owner = request.user).accountType != 1) return redirect('/')
+	
 	if (studentid == "" or  subjectname == "" or score == ""):
 		return redirect('/')
 
@@ -42,6 +46,11 @@ def getScoreListView(request):
         # 	cursor.execute("SELECT * FROM insecure_web_scores WHERE student_id_id= %d AND instr(subject, %s) > 0 ", [studentid, subjectname])
 	#	a = cursor.fetchall()
 	#	data = [{ score[1] : score[2]} for score in a]
+	
+	# we only want students to check their own scores
+	# as such, we can do validation to fix it
+	# if ((Account.objects.get(owner = request.user).accountType == 2) and (studentid == Account.objects.get(owner = request.user).id)):
+	# return redirect('/')
 	
 	if(currentloggedaccount.accountType == 2):
 		context["type"] = "student"
