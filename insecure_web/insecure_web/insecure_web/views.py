@@ -16,6 +16,7 @@ def inputScoreView(request):
 	print(sqlstatement)
 	with connection.cursor() as cursor:
 		cursor.execute(sqlstatement)
+		#cursor.execute("INSERT INTO insecure_web_scores (student_id_id, subject, scores) VALUES (%d,%d,%d)", [studentid, subjectname, score])
 	
 	return redirect('/')
 
@@ -29,13 +30,16 @@ def getScoreListView(request):
 	subjectname = request.GET.get("subjectname")
 
 	sqlstatement = "SELECT * FROM insecure_web_scores WHERE student_id_id=" + studentid + " AND subject LIKE '%" + subjectname +  "%'"  
-	
-	
 
 	data = []
 
 	for p in Account.objects.raw(sqlstatement):
 		data.append({p.subject: p.scores})
+	
+	# with connection.cursor() as cursor:
+        # 	cursor.execute("SELECT * FROM insecure_web_scores WHERE student_id_id= %d AND instr(subject, %s) > 0 ", [studentid, subjectname])
+	#	a = cursor.fetchall()
+	#	data = [{ score[1] : score[2]} for score in a]
 	
 	if(currentloggedaccount.accountType == 2):
 		context["type"] = "student"
