@@ -4,6 +4,7 @@ from django.db import connection
 from .models import Account, Scores
 
 @login_required
+@csrf_exempt #fix: just remove this
 def inputScoreView(request):
 	studentid = request.POST.get("studentid")
 	subjectname = request.POST.get("subjectname")
@@ -22,6 +23,7 @@ def inputScoreView(request):
 
 
 @login_required
+@csrf_exempt #fix: just remove this
 def getScoreListView(request):
 	context = {}
 	currentloggedaccount = Account.objects.get(owner = request.user)
