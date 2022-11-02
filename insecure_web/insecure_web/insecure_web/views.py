@@ -8,6 +8,7 @@ from .models import Account, Scores
 def inputScoreView(request):
 	studentid = request.POST.get("studentid")
 	subjectname = request.POST.get("subjectname")
+	#there should be sanity check to see if score is valid or not, such as (if request.POST.get("score") < 0 or request.POST.get("score") > 100: return redirect("/"))
 	score = str(request.POST.get("score"))
 
 	# there is no validation here if the inputter is teacher or not, the only validation if the inputter is logged in
